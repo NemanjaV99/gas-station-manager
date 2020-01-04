@@ -1,0 +1,10 @@
+{
+    "name": "nemanjav99/gas-station-manager",
+    "type": "project",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "GSManager\\": "src/"
+        }
+    }
+}
