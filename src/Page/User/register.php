@@ -1,3 +1,11 @@
+<?php
+
+    use GSManager\Domain\Entity\User;
+    use GSManager\BLogic\User\RegisterUser;
+    use GSManager\Database\User\UserDataAccess;
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,7 +20,7 @@
         <label for="input-name">Name:</label>
         <input type="text" name="name" class="form__input" id="input-name">
         <label for="input-lname">Last name:</label>
-        <input type="text" name="lname" class="form__input" id="input-lname">
+        <input type="text" name="surname" class="form__input" id="input-lname">
         <label for="input-email">Email:</label>
         <input type="text" name="email" class="form__input" id="input-email">
         <label for="input-password">Password:</label>
@@ -24,3 +32,24 @@
 
 </body>
 </html>
+
+<?php
+
+    if (isset($_POST["register"])) {
+
+        $user = new User();
+        $userRepository = new UserDataAccess;
+        $registerUser = new RegisterUser($user, $userRepository);
+        $result = $registerUser->register();
+
+        if ($result["success"]) {
+
+            echo "User data is valid.";
+
+        } else {
+
+            var_dump($result["error"]);
+        }
+
+    }
+
