@@ -3,6 +3,7 @@
     use GSManager\Domain\Entity\User;
     use GSManager\BLogic\User\RegisterUser;
     use GSManager\Database\User\UserDataAccess;
+    use GSManager\BLogic\User\UserValidator;
 
 ?>
 
@@ -39,7 +40,8 @@
 
         $user = new User();
         $userRepository = new UserDataAccess;
-        $registerUser = new RegisterUser($user, $userRepository);
+        $userValidator = new UserValidator();
+        $registerUser = new RegisterUser($user, $userRepository, $userValidator);
         $result = $registerUser->register();
 
         if ($result["success"]) {
@@ -48,7 +50,7 @@
 
         } else {
 
-            var_dump($result["error"]);
+            var_dump($result["errors"]);
         }
 
     }

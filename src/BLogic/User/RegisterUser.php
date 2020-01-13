@@ -2,6 +2,7 @@
 
     namespace GSManager\BLogic\User;
 
+    use GSManager\BLogic\User\UserValidator;
     use GSManager\Domain\Entity\User;
     use GSManager\Domain\Repository\IUserRepository;
 
@@ -9,33 +10,39 @@
     {
         private $user;
         private $repository;
+        private $validator;
         private $requestData;
-        private $response;
+        private $result;
 
-        public function __construct(User $user, IUserRepository $userRepository)
+        public function __construct(User $user, IUserRepository $userRepository, UserValidator $userValidator)
         {
             $this->user = $user;
             $this->repository = $userRepository;
+            $this->validator = $userValidator;
         }
 
         public function register()
         {
             $this->getRequestData();
 
-            // ---------------
             $this->validate();
 
-            if ($this->response["success"]) {
+            if ($this->result["success"]) {
 
                 $this->validUserEmployee();
                 $this->validGasStation();
                 $this->hashPassword();
-                $this->mapToUser();
-                $this->saveUser();
+
+                // If success still true map to user object and add that to DB
+                if ($this->result["success"]) {
+
+                    $this->mapToUser();
+                    $this->saveUser();
+                }
 
             }
 
-            return $this->response;
+            return $this->result;
             
         }
 
@@ -46,28 +53,20 @@
 
         private function validate()
         {
-           // Only change to true if validation passes
-           $this->response["success"] = false;
+            if (
+                $this->validator->checkEmptyAllFields($this->requestData)
+                && $this->validator->validateName($this->requestData["name"])
+                && $this->validator->validateName($this->requestData["surname"])
+                && $this->validator->validateEmail($this->requestData["email"])
+            ) {
 
-           if (
-               ctype_alpha($this->requestData["name"])
-               && ctype_alpha($this->requestData["surname"])
-           ) {
+                $this->result["success"] = true;
 
-               if (filter_var($this->requestData["email"], FILTER_VALIDATE_EMAIL) !== false) {
+            } else {
 
-                   $this->response["success"] = true;
-
-               } else {
-
-                   $this->response["error"] = "Email address is not valid.";
-               }
-
-           } else {
-
-                $this->response["error"] = "Name or Last name ";
-                $this->response["error"] .= "contains characters that are not allowed.";
-           }
+                $this->result["errors"] = $this->validator->getErrors();
+                $this->result["success"] = false;
+            }
         }
         
         private function validUserEmployee()
@@ -90,7 +89,8 @@
 
             if ($this->requestData["password"] === false) {
 
-                $this->response["error"] = "Internal error. Please try again.";
+                $this->result["errors"] = "Internal error. Please try again.";
+                $this->result["success"] = false;
             }
         }
 
