@@ -4,6 +4,7 @@
     use GSManager\BLogic\User\RegisterUser;
     use GSManager\Database\User\UserDataAccess;
     use GSManager\BLogic\User\UserValidator;
+    use GSManager\Database\DatabaseConnection;
 
 ?>
 
@@ -39,7 +40,9 @@
     if (isset($_POST["register"])) {
 
         $user = new User();
-        $userRepository = new UserDataAccess;
+        $dbCredentials = require_once "config/db.php";
+        $dbConn = new DatabaseConnection($dbCredentials);
+        $userRepository = new UserDataAccess($dbConn);
         $userValidator = new UserValidator();
         $registerUser = new RegisterUser($user, $userRepository, $userValidator);
         $result = $registerUser->register();
@@ -47,6 +50,7 @@
         if ($result["success"]) {
 
             echo "User data is valid.";
+            var_dump($result);
 
         } else {
 

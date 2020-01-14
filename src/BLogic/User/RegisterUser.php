@@ -29,8 +29,7 @@
 
             if ($this->result["success"]) {
 
-                $this->validUserEmployee();
-                $this->validGasStation();
+                $this->validEmployee();
                 $this->hashPassword();
 
                 // If success still true map to user object and add that to DB
@@ -53,6 +52,10 @@
 
         private function validate()
         {
+
+            $this->requestData["name"] = $this->validator->changeNameCase($this->requestData["name"]);
+            $this->requestData["surname"] = $this->validator->changeNameCase($this->requestData["surname"]);
+
             if (
                 $this->validator->checkEmptyAllFields($this->requestData)
                 && $this->validator->validateName($this->requestData["name"])
@@ -68,18 +71,63 @@
                 $this->result["success"] = false;
             }
         }
-        
-        private function validUserEmployee()
+
+        private function validEmployee()
         {
-            $this->repository->checkUserEmployee(
-                $this->requestData["name"], 
-                $this->requestData["surname"], 
-                $this->requestData["gstation"]);
+            $this->validGasStation();
+
+            if ($this->result["success"]) {
+
+                $this->validUserEmployee();
+            }
+
         }
 
         private function validGasStation()
         {
-            $this->repository->checkGasStation($this->requestData["gstation"]);
+            $dbResult = $this->repository->checkGasStation($this->requestData["gstation"]);
+
+            $this->result["success"] = true;
+
+            if ($dbResult["success"]) {
+
+                // If result is false, it means database does not exist
+                if (!$dbResult["result"]) {
+
+                    $this->result["success"] = false;
+                    $this->result["errors"][] = "Gas Station does not exist.";
+                }
+
+            } else {
+
+                $this->result["success"] = false;
+                $this->result["errors"][] = $dbResult["error"];
+            }
+        }
+        
+        private function validUserEmployee()
+        {
+            $dbResult = $this->repository->checkUserEmployee(
+                $this->requestData["name"], 
+                $this->requestData["surname"], 
+                $this->requestData["gstation"]);
+
+            $this->result["success"] = true;
+
+            if ($dbResult["success"]) {
+
+                // If result is false, it means user does not exist
+                if (!$dbResult["result"]) {
+
+                    $this->result["success"] = false;
+                    $this->result["errors"][] = "Employee with given name/surname does not exist.";
+                }
+
+            } else {
+
+                $this->result["success"] = false;
+                $this->result["errors"][] = $dbResult["error"];
+            }
         }
 
         private function hashPassword()
@@ -89,7 +137,7 @@
 
             if ($this->requestData["password"] === false) {
 
-                $this->result["errors"] = "Internal error. Please try again.";
+                $this->result["errors"][] = "Internal error. Please try again.";
                 $this->result["success"] = false;
             }
         }

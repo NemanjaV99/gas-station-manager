@@ -31,4 +31,9 @@
             }
         }
 
+        public function changeNameCase($name)
+        {
+            return ucfirst(strtolower($name));
+        }
+
     }

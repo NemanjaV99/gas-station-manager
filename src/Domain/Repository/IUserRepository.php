@@ -4,7 +4,7 @@
 
     interface IUserRepository
     {
-        public function checkUserEmployee($name, $surname, $gasStation);
+        public function checkUserEmployee($name, $surname);
         public function checkGasStation($gasStation);
         public function addUser($user);
     }
