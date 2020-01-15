@@ -4,11 +4,11 @@
 
     abstract class Validator
     {
-        protected $errors = [];
+        protected $error;
 
-        public function getErrors()
+        public function getError()
         {
-            return $this->errors;
+            return $this->error;
         }
 
         public function checkEmptyInput($input)
@@ -22,7 +22,7 @@
 
                 if (!$this->checkEmptyInput($field)) {
 
-                    $this->errors[] = "All fields must be checked.";
+                    $this->error = "All fields must be checked.";
                     return false;
                 }
             }

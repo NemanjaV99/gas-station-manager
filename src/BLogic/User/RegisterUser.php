@@ -30,11 +30,12 @@
             if ($this->result["success"]) {
 
                 $this->validEmployee();
-                $this->hashPassword();
 
                 // If success still true map to user object and add that to DB
                 if ($this->result["success"]) {
 
+                    $this->getGasStationNameFromDB();
+                    $this->hashPassword();
                     $this->mapToUser();
                     $this->saveUser();
                 }
@@ -67,42 +68,20 @@
 
             } else {
 
-                $this->result["errors"] = $this->validator->getErrors();
+                $this->result["error"] = $this->validator->getError();
                 $this->result["success"] = false;
             }
         }
 
         private function validEmployee()
         {
-            $this->validGasStation();
+            $this->validUserEmployee();
 
             if ($this->result["success"]) {
 
-                $this->validUserEmployee();
+                $this->matchEmployeeGasStation();
             }
 
-        }
-
-        private function validGasStation()
-        {
-            $dbResult = $this->repository->checkGasStation($this->requestData["gstation"]);
-
-            $this->result["success"] = true;
-
-            if ($dbResult["success"]) {
-
-                // If result is false, it means database does not exist
-                if (!$dbResult["result"]) {
-
-                    $this->result["success"] = false;
-                    $this->result["errors"][] = "Gas Station does not exist.";
-                }
-
-            } else {
-
-                $this->result["success"] = false;
-                $this->result["errors"][] = $dbResult["error"];
-            }
         }
         
         private function validUserEmployee()
@@ -116,17 +95,59 @@
 
             if ($dbResult["success"]) {
 
-                // If result is false, it means user does not exist
+                // If result is false, it means employee does not exist
                 if (!$dbResult["result"]) {
 
                     $this->result["success"] = false;
-                    $this->result["errors"][] = "Employee with given name/surname does not exist.";
+                    $this->result["error"] = "Employee with given name/surname does not exist.";
                 }
 
             } else {
 
                 $this->result["success"] = false;
-                $this->result["errors"][] = $dbResult["error"];
+                $this->result["error"] = $dbResult["error"];
+            }
+        }
+
+        private function matchEmployeeGasStation()
+        {
+            $dbResult = $this->repository->checkEmployeeGasStation(
+                $this->requestData["name"],
+                $this->requestData["surname"],
+                $this->requestData["gstation"]
+            );
+
+            $this->result["success"] = true;
+
+            if ($dbResult["success"]) {
+
+                // If result is false, it means employee does not work for the given gas station
+                if (!$dbResult["result"]) {
+
+                    $this->result["success"] = false;
+                    $this->result["error"] = "Employee does not work at this Gas Station.";
+                }
+
+            } else {
+
+                $this->result["success"] = false;
+                $this->result["error"] = $dbResult["error"];
+            }
+        }
+
+        private function getGasStationNameFromDB()
+        {
+            $dbResult = $this->repository->getGasStationNameFromID($this->requestData["gstation"]);
+
+            if ($dbResult["success"] && $dbResult["result"] !== false) {
+
+                $this->result["success"] = true;
+                $this->requestData["gstation"] = $dbResult["result"];
+
+            } else {
+
+                $this->result["success"] = false;
+                $this->result["error"] = $dbResult["error"];
             }
         }
 
@@ -134,12 +155,6 @@
         {
             $password = $this->requestData["password"];
             $this->requestData["password"] = password_hash($password, PASSWORD_BCRYPT);
-
-            if ($this->requestData["password"] === false) {
-
-                $this->result["errors"][] = "Internal error. Please try again.";
-                $this->result["success"] = false;
-            }
         }
 
         private function mapToUser()

@@ -28,7 +28,11 @@
         <label for="input-password">Password:</label>
         <input type="password" name="password" class="form__input form__input--pass" id="input-password">
         <label for="input-gstation">Gas Station:</label>
-        <input type="text" name="gstation" class="form__input" id="input-gstation">
+        <select name="gstation" id="input-gstation" class="form__select">
+            <option value="1">Pumpa A</option>
+            <option value="2">Pumpa B</option>
+            <option value="3">Pumpa C</option>
+        </select>
         <input type="submit" name="register" value="Register">
     </form>
 
@@ -54,7 +58,7 @@
 
         } else {
 
-            var_dump($result["errors"]);
+            var_dump($result["error"]);
         }
 
     }

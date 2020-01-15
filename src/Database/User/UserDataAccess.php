@@ -10,9 +10,22 @@
         private $dbConn;
         private $response;
 
+
         public function __construct(DatabaseConnection $dbConn)
         {
             $this->dbConn = $dbConn;
+        }
+
+        public function dbErrorCheck($dbResult)
+        {
+            if (isset($dbResult["db_error"])) {
+
+                $this->response["success"] = false;
+                $this->response["error"] = "Something went wrong. Please try again soon.";
+                return false;
+            }
+
+            return true;
         }
 
         public function checkUserEmployee($name, $surname)
@@ -23,44 +36,52 @@
 
             $dbResult = $this->dbConn->executeQuery($query, $params);
 
-            if (!isset($dbResult["db_error"]) 
-                && $dbResult["query_exec_result"]
-            ) {
+            if ($this->dbErrorCheck($dbResult)) {
 
                 $statement = $dbResult["statement"];
                 
                 $this->response["success"] = true;
                 $this->response["result"] = $statement->rowCount() > 0;
 
-            } else {
-
-                $this->response["success"] = false;
-                $this->response["error"] = "Something went wrong. Please try again soon.";
             }
 
             return $this->response;
         }
 
-        public function checkGasStation($gasStation)
+        public function checkEmployeeGasStation($name, $surname, $gasStationID)
         {
-            $query = "SELECT ID_PUMPA FROM pumpa WHERE NAZIV = :gstation";
-            $params = [":gstation" => $gasStation];
+            $query = "SELECT ID_RADNIK from radnik WHERE IME = :name AND PREZIME = :surname";
+            $query .= " AND ID_PUMPA = :gsID";
+            $params = [":name" => $name, ":surname" => $surname, "gsID" => $gasStationID];
 
             $dbResult = $this->dbConn->executeQuery($query, $params);
 
-            if (!isset($dbResult["db_error"]) 
-                && $dbResult["query_exec_result"]
-            ) {
+            if ($this->dbErrorCheck($dbResult)) {
 
                 $statement = $dbResult["statement"];
                 
                 $this->response["success"] = true;
                 $this->response["result"] = $statement->rowCount() > 0;
 
-            } else {
+            }
 
-                $this->response["success"] = false;
-                $this->response["error"] = "Something went wrong. Please try again soon.";
+            return $this->response;
+        }
+
+        public function getGasStationNameFromID($gasStationID)
+        {
+            $query = "SELECT NAZIV FROM pumpa WHERE ID_PUMPA = :id";
+            $params = [":id" => $gasStationID];
+
+            $dbResult = $this->dbConn->executeQuery($query, $params);
+
+            if ($this->dbErrorCheck($dbResult)) {
+
+                $statement = $dbResult["statement"];
+                
+                $this->response["success"] = true;
+                $this->response["result"] = $statement->fetchColumn();
+
             }
 
             return $this->response;

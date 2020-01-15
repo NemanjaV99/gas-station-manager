@@ -13,7 +13,7 @@
                 return true;
             } else {
 
-                $this->errors[] = "Email is not valid.";
+                $this->error = "Email is not valid.";
                 return false;
             }
         }
@@ -26,7 +26,7 @@
 
             } else {
 
-                $this->errors[] = "Name/Surname can only contain alphabetic characters.";
+                $this->error = "Name/Surname can only contain alphabetic characters.";
                 return false;
             }
         }

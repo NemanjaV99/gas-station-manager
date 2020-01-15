@@ -39,10 +39,15 @@
 
                     $stmtResult = $statement->execute($params);
                 }
+    
+                if ($stmtResult) {
 
-                $this->dbResponse["query_exec_result"] = $stmtResult;
-                $this->dbResponse["statement"] = $statement;
+                    $this->dbResponse["statement"] = $statement;
 
+                } else {
+
+                    $this->dbResponse["db_error"] = true;
+                }
 
             } catch (PDOException $ex) {
 
