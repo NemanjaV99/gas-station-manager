@@ -1,5 +1,8 @@
-#ignore txt files
+#ignore txt files 
 *.txt
 
 #ignore database settings
 config/db.php
+
+#ignore vendor
+vendor/
