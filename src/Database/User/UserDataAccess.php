@@ -89,6 +89,27 @@
 
         public function addUser($user)
         {
-            var_dump($user);
+            $query = "INSERT INTO korisnik(IME, PREZIME, EMAIL, LOZINKA, NAZIV_PUMPE) ";
+            $query .= "VALUES (:name, :surname, :email, :pass, :gstation)";
+
+            $params[":name"] = $user->getName();
+            $params[":surname"] = $user->getSurname();
+            $params[":email"] = $user->getEmail();
+            $params[":pass"] = $user->getPassword();
+            $params[":gstation"] = $user->getGasStation();
+
+            $dbResult = $this->dbConn->executeQuery($query, $params);
+
+            if ($this->dbErrorCheck($dbResult)) {
+
+                $statement = $dbResult["statement"];
+                
+                $this->response["success"] = true;
+                $this->response["result"] = $statement->rowCount() > 0;
+
+            }
+
+            return $this->response;
+            
         }
     }

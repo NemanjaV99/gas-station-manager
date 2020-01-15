@@ -53,8 +53,7 @@
 
         if ($result["success"]) {
 
-            echo "User data is valid.";
-            var_dump($result);
+            echo "Registration complete.";
 
         } else {
 

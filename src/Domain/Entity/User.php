@@ -10,6 +10,42 @@
         private $email;
         private $password;
         private $gasStation;
+        private $role;
+
+        public function getID()
+        {
+            return $this->id;
+        }
+
+        public function getName()
+        {
+            return $this->name;
+        }
+
+        public function getSurname()
+        {
+            return $this->surname;
+        }
+
+        public function getEmail()
+        {
+            return $this->email;
+        }
+
+        public function getPassword()
+        {
+            return $this->password;
+        }
+
+        public function getGasStation()
+        {
+            return $this->gasStation;
+        }
+
+        public function getRole()
+        {
+            return $this->role;
+        }
 
         public function setID($id)
         {
@@ -39,5 +75,10 @@
         public function setGasStation($gasStation)
         {
             $this->gasStation = $gasStation;
+        }
+
+        public function setRole($role)
+        {
+            $this->role = $role;
         }
     }

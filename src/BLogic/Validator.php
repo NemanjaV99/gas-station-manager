@@ -30,6 +30,18 @@
             return true;
         }
 
+        public function trimAllFields($fields)
+        {
+            $trimedFields = [];
+
+            foreach ($fields as $key => $value) {
+
+                $trimedFields[$key] = trim($value);
+            }
+
+            return $trimedFields;
+        }
+
         public function checkAlphaChars($input)
         {
             return ctype_alpha($input);
