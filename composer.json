@@ -1,7 +1,9 @@
 {
     "name": "nemanjav99/gas-station-manager",
     "type": "project",
-    "require": {},
+    "require": {
+        "php-di/php-di": "^5.4"
+    },
     "autoload": {
         "psr-4": {
             "GSManager\\": "src/"

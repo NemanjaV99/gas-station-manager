@@ -2,14 +2,18 @@
 
     namespace GSManager;
 
+    use Psr\Container\ContainerInterface;
+
     class App
     {
 
         private $config;
+        private $container;
 
-        public function __construct($config)
+        public function __construct($config, $container)
         {
             $this->config = $config;
+            $this->container = $container;
         }
 
         public function start()
@@ -19,6 +23,9 @@
 
         private function loadPage()
         {
+            // This will be used by the loaded pages 
+            $container = $this->container;
+
             if (isset($_GET["page"], $_GET["type"])) {
 
                 $page = strtolower($_GET["page"]);

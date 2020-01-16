@@ -1,13 +1,3 @@
-<?php
-
-    use GSManager\Domain\Entity\User;
-    use GSManager\BLogic\User\RegisterUser;
-    use GSManager\Database\User\UserDataAccess;
-    use GSManager\BLogic\User\UserValidator;
-    use GSManager\Database\DatabaseConnection;
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,12 +33,7 @@
 
     if (isset($_POST["register"])) {
 
-        $user = new User();
-        $dbCredentials = require_once "config/db.php";
-        $dbConn = new DatabaseConnection($dbCredentials);
-        $userRepository = new UserDataAccess($dbConn);
-        $userValidator = new UserValidator();
-        $registerUser = new RegisterUser($user, $userRepository, $userValidator);
+        $registerUser = $container->get("RegisterUser");
         $result = $registerUser->register();
 
         if ($result["success"]) {
@@ -57,7 +42,7 @@
 
         } else {
 
-            var_dump($result["error"]);
+            echo $result["error"];
         }
 
     }

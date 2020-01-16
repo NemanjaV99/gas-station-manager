@@ -4,6 +4,11 @@
 
     require_once "vendor/autoload.php";
     $config = require_once "config/config.php";
+    $dependencies = require_once "config/dependencies.php";
 
-    $app = new App($config);
+    $containerBuilder = new DI\ContainerBuilder();
+    $containerBuilder->addDefinitions($dependencies);
+    $container = $containerBuilder->build();
+
+    $app = new App($config, $container);
     $app->start();
