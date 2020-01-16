@@ -112,4 +112,30 @@
             return $this->response;
             
         }
+
+        public function checkUserExists($email)
+        {
+            $query = "SELECT * FROM korisnik WHERE EMAIL = :email";
+            $params = [":email" => $email];
+
+            $dbResult = $this->dbConn->executeQuery($query, $params);
+
+            if ($this->dbErrorCheck($dbResult)) {
+
+                $this->response["success"] = true;
+                $statement = $dbResult["statement"];
+                
+                if ($statement->rowCount() > 0) {
+
+                    $this->response["result"] = $statement->fetchObject();
+
+                } else {
+
+                    $this->response["result"] = false;
+                }
+
+            }
+
+            return $this->response;
+        }
     }

@@ -8,4 +8,6 @@
         public function checkEmployeeGasStation($name, $surname, $gasStationID);
         public function getGasStationNameFromID($gasStationID);
         public function addUser($user);
+
+        public function checkUserExists($email);
     }

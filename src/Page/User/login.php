@@ -18,3 +18,23 @@
 
 </body>
 </html>
+
+<?php
+
+    if (isset($_POST["login"])) {
+
+
+        $loginUser = $container->get("LoginUser");
+        $result = $loginUser->login();
+
+        if ($result["success"]) {
+
+            var_dump($result);
+            echo "Welcome!";
+
+        } else {
+
+            echo $result["error"];
+        } 
+
+    }

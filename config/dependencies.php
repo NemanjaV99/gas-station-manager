@@ -10,8 +10,11 @@
         "DatabaseConfig" => require_once "db.php",
 
         /** Business Logic - User */
-        "LoginUser" => function () {
-            return new GSManager\BLogic\User\LoginUser();
+        "LoginUser" => function (ContainerInterface $c) {
+            return new GSManager\BLogic\User\LoginUser(
+                $c->get("User"), 
+                $c->get("UserDataAccess"), 
+                $c->get("UserValidator"));
         },
 
         "RegisterUser" => function (ContainerInterface $c) {
