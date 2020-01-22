@@ -31,7 +31,7 @@
         public function checkUserEmployee($name, $surname)
         {   
 
-            $query = "SELECT ID_RADNIK FROM radnik WHERE IME = :name AND PREZIME = :surname";
+            $query = "SELECT ID_EMPLOYEE FROM employee WHERE NAME = :name AND SURNAME = :surname";
             $params = [":name" => $name, ":surname" => $surname];
 
             $dbResult = $this->dbConn->executeQuery($query, $params);
@@ -50,8 +50,8 @@
 
         public function checkEmployeeGasStation($name, $surname, $gasStationID)
         {
-            $query = "SELECT ID_RADNIK from radnik WHERE IME = :name AND PREZIME = :surname";
-            $query .= " AND ID_PUMPA = :gsID";
+            $query = "SELECT ID_EMPLOYEE from employee WHERE NAME = :name AND SURNAME = :surname";
+            $query .= " AND ID_GAS_STATION = :gsID";
             $params = [":name" => $name, ":surname" => $surname, "gsID" => $gasStationID];
 
             $dbResult = $this->dbConn->executeQuery($query, $params);
@@ -70,7 +70,7 @@
 
         public function getGasStationNameFromID($gasStationID)
         {
-            $query = "SELECT NAZIV FROM pumpa WHERE ID_PUMPA = :id";
+            $query = "SELECT NAME FROM gas_station WHERE ID_GAS_STATION = :id";
             $params = [":id" => $gasStationID];
 
             $dbResult = $this->dbConn->executeQuery($query, $params);
@@ -89,7 +89,7 @@
 
         public function addUser($user)
         {
-            $query = "INSERT INTO korisnik(IME, PREZIME, EMAIL, LOZINKA, NAZIV_PUMPE) ";
+            $query = "INSERT INTO user(NAME, SURNAME, EMAIL, PASSWORD, GAS_STATION_NAME) ";
             $query .= "VALUES (:name, :surname, :email, :pass, :gstation)";
 
             $params[":name"] = $user->getName();
@@ -115,7 +115,7 @@
 
         public function checkUserExists($email)
         {
-            $query = "SELECT * FROM korisnik WHERE EMAIL = :email";
+            $query = "SELECT * FROM user WHERE EMAIL = :email";
             $params = [":email" => $email];
 
             $dbResult = $this->dbConn->executeQuery($query, $params);

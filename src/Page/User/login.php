@@ -29,7 +29,7 @@
 
         if ($result["success"]) {
 
-            var_dump($result);
+            // Session and redirect
             echo "Welcome!";
 
         } else {

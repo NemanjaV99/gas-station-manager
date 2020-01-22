@@ -76,7 +76,7 @@
                 // If result is false, it means that user does not exist
                 if ($dbResult["result"] !== false) {
 
-                    if ($this->validPassword($dbResult["result"]->LOZINKA)) {
+                    if ($this->validPassword($dbResult["result"]->PASSWORD)) {
 
                         $this->result["success"] = true;
                         return $dbResult["result"];
@@ -104,12 +104,12 @@
 
         private function mapToUser($userDB)
         {
-            $this->user->setID($userDB->ID_KORISNIK);
-            $this->user->setName($userDB->IME);
-            $this->user->setSurname($userDB->PREZIME);
+            $this->user->setID($userDB->ID_USER);
+            $this->user->setName($userDB->NAME);
+            $this->user->setSurname($userDB->SURNAME);
             $this->user->setEmail($userDB->EMAIL);
-            $this->user->setPassword($userDB->LOZINKA);
-            $this->user->setGasStation($userDB->NAZIV_PUMPE);
-            $this->user->setRole($userDB->ID_ROLA);
+            $this->user->setPassword($userDB->PASSWORD);
+            $this->user->setGasStation($userDB->GAS_STATION_NAME);
+            $this->user->setRole($userDB->ID_ROLE);
         }
     }
