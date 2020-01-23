@@ -30,7 +30,10 @@
         if ($result["success"]) {
 
             // Session and redirect
-            echo "Welcome!";
+            echo "<br>Welcome " . $result["data"]->getName() . "<br>";
+            echo "Your email is: " . $result["data"]->getEmail() . "<br>";
+            echo "You work at: " . $result["data"]->getGasStation();
+
 
         } else {
 

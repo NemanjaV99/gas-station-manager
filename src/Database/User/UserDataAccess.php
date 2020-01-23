@@ -68,6 +68,25 @@
             return $this->response;
         }
 
+        public function checkUserExists($email)
+        {
+            $query = "SELECT NAME, SURNAME FROM user WHERE EMAIL = :email";
+            $params = [":email" => $email];
+
+            $dbResult = $this->dbConn->executeQuery($query, $params);
+
+            if ($this->dbErrorCheck($dbResult)) {
+
+                $statement = $dbResult["statement"];
+                
+                $this->response["success"] = true;
+                $this->response["result"] = $statement->rowCount() > 0;
+
+            }
+
+            return $this->response;
+        }
+
         public function getGasStationNameFromID($gasStationID)
         {
             $query = "SELECT NAME FROM gas_station WHERE ID_GAS_STATION = :id";
@@ -113,7 +132,7 @@
             
         }
 
-        public function checkUserExists($email)
+        public function getUserWithEmail($email)
         {
             $query = "SELECT * FROM user WHERE EMAIL = :email";
             $params = [":email" => $email];

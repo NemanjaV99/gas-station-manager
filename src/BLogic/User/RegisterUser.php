@@ -33,11 +33,13 @@
                 
                 if ($this->result["success"]) {
 
-                    $this->getGasStationNameFromDB();
-                    $this->hashPassword();
+                    $this->userAlreadyExists();
                     
                     // If success still true map to user object and add that to DB
                     if ($this->result["success"]) {
+
+                        $this->getGasStationNameFromDB();
+                        $this->hashPassword();
 
                         $this->mapToUser();
                         $this->saveUser();
@@ -130,6 +132,29 @@
 
                     $this->result["success"] = false;
                     $this->result["error"] = "Employee does not work at this Gas Station.";
+                }
+
+            } else {
+
+                $this->result["success"] = false;
+                $this->result["error"] = $dbResult["error"];
+            }
+        }
+
+        private function userAlreadyExists()
+        {
+            $dbResult = $this->repository->checkUserExists($this->requestData["email"]);
+
+            // this will only change to false if something fails
+            $this->result["success"] = true;
+            
+            if ($dbResult["success"]) {
+
+                // If result is true, it means that user already exists
+                if ($dbResult["result"]) {
+
+                    $this->result["success"] = false;
+                    $this->result["error"] = "User already exists.";
                 }
 
             } else {

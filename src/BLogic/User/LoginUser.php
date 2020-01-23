@@ -34,7 +34,7 @@
                 if ($this->result["success"]) {
 
                     $this->mapToUser($userDB);
-                    var_dump($this->user);
+                    $this->result["data"] = $this->user;
                 }
             }
 
@@ -66,7 +66,7 @@
 
         private function validUser()
         {
-            $dbResult = $this->repository->checkUserExists($this->requestData["email"]);
+            $dbResult = $this->repository->getUserWithEmail($this->requestData["email"]);
 
             // This will only change to true if everything is valid
             $this->result["success"] = false;

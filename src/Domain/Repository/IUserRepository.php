@@ -6,8 +6,9 @@
     {
         public function checkUserEmployee($name, $surname);
         public function checkEmployeeGasStation($name, $surname, $gasStationID);
+        public function checkUserExists($email);
         public function getGasStationNameFromID($gasStationID);
         public function addUser($user);
 
-        public function checkUserExists($email);
+        public function getUserWithEmail($email);
     }
