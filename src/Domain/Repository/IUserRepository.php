@@ -11,4 +11,5 @@
         public function addUser($user);
 
         public function getUserWithEmail($email);
+        public function getLastInsertID();
     }

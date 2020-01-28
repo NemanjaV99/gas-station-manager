@@ -16,6 +16,11 @@
             $this->dbConn = $dbConn;
         }
 
+        public function getLastInsertID()
+        {
+            return $this->dbConn->lastInsertID();
+        }
+
         public function dbErrorCheck($dbResult)
         {
             if (isset($dbResult["db_error"])) {

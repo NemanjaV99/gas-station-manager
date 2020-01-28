@@ -43,6 +43,9 @@
 
                         $this->mapToUser();
                         $this->saveUser();
+
+                        $this->user->setID($this->repository->getLastInsertID());
+                        $this->result["data"] = $this->user;
                     }
                 }
 

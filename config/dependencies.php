@@ -9,6 +9,10 @@
 
         "DatabaseConfig" => require_once "db.php",
 
+        "Session" => function (ContainerInterface $c) {
+            return new \GSManager\Utility\Session();
+        },
+
         /** Business Logic - User */
         "LoginUser" => function (ContainerInterface $c) {
             return new GSManager\BLogic\User\LoginUser(

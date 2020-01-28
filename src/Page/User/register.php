@@ -1,3 +1,16 @@
+<?php
+
+    session_start();
+
+    $session = $container->get("Session");
+    
+    if ($session->exists()) {
+
+        $session->redirect("?page=home&type=user");
+    }
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,7 +51,9 @@
 
         if ($result["success"]) {
 
-            echo "Registration complete.";
+            $user = $result["data"];
+            $session->setSession($user);
+            $session->redirect("?page=home&type=user");
 
         } else {
 

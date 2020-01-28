@@ -2,12 +2,14 @@
 
     return [
 
-        "Default" => "src/Page/home.php",
+        "Default" => "src/Page/intro.php",
 
         "User" => [
 
             "register" => "src/Page/User/register.php",
-            "login" => "src/Page/User/login.php"
+            "login" => "src/Page/User/login.php",
+            "home" => "src/Page/User/home.php",
+            "logout" => "src/Page/User/logout.php"
         ]
 
     ];

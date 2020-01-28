@@ -1,3 +1,16 @@
+<?php
+
+    session_start();
+
+    $session = $container->get("Session");
+    
+    if ($session->exists()) {
+
+        $session->redirect("?page=home&type=user");
+    }
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,9 +43,9 @@
         if ($result["success"]) {
 
             // Session and redirect
-            echo "<br>Welcome " . $result["data"]->getName() . "<br>";
-            echo "Your email is: " . $result["data"]->getEmail() . "<br>";
-            echo "You work at: " . $result["data"]->getGasStation();
+            $user = $result["data"];
+            $session->setSession($user);
+            $session->redirect("?page=home&type=user");
 
 
         } else {

@@ -82,4 +82,9 @@
         {
             $this->connection = null;
         }
+
+        public function lastInsertID()
+        {
+            return $this->connection->lastInsertId();
+        }
     }

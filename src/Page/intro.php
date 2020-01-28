@@ -1,3 +1,16 @@
+<?php
+
+    session_start();
+
+    $session = $container->get("Session");
+    
+    if ($session->exists()) {
+
+        $session->redirect("?page=home&type=user");
+    }
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,5 +21,7 @@
 </head>
 <body>
     <h1>Homepage</h1>
+    <a href="index.php?page=login&type=user">Login</a>
+    <a href="index.php?page=register&type=user">Register</a>
 </body>
 </html>
