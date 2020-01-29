@@ -35,7 +35,6 @@
 
                     $this->userAlreadyExists();
                     
-                    // If success still true map to user object and add that to DB
                     if ($this->result["success"]) {
 
                         $this->getGasStationNameFromDB();
@@ -200,7 +199,7 @@
 
         private function saveUser()
         {
-            $dbResult = $this->repository->addUser($this->user);
+            $dbResult = $this->repository->create($this->user);
 
             // If result is true, user has been successfully added to the DB
             if ($dbResult["success"] && $dbResult["result"]) {

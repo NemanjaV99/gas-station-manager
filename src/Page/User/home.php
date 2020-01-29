@@ -1,6 +1,6 @@
 <?php
     $session = $container->get("Session");
-    $session->notSet();
+    $session->checkSessionAndRedirect(basename(__FILE__, ".php"));
 ?>
 
 <!DOCTYPE html>

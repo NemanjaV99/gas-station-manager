@@ -1,13 +1,7 @@
 <?php
 
-    session_start();
-
     $session = $container->get("Session");
-    
-    if ($session->exists()) {
-
-        $session->redirect("?page=home&type=user");
-    }
+    $session->checkSessionAndRedirect(basename(__FILE__, ".php"));
 
 ?>
 

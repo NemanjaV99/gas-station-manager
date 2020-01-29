@@ -66,7 +66,7 @@
 
         private function validUser()
         {
-            $dbResult = $this->repository->getUserWithEmail($this->requestData["email"]);
+            $dbResult = $this->repository->retrieve($this->requestData["email"]);
 
             // This will only change to true if everything is valid
             $this->result["success"] = false;

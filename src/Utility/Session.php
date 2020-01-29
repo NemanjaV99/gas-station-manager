@@ -4,12 +4,36 @@
 
     class Session
     {
-        public function notSet()
+
+        public function checkSessionAndRedirect($currentPage)
         {
             session_start();
 
-            if (!$this->exists()) {
-                $this->redirect("?page=login&type=user");
+            if ($this->exists()) {
+
+                switch ($currentPage) {
+
+                    case "login":
+                    case "register":
+                    case "intro":
+                        $this->redirect("?page=home&type=user");
+                        break;
+                    default:
+                        "";
+                }
+
+            } else {
+
+                switch ($currentPage) {
+
+                    case "login":
+                    case "register":
+                    case "intro":
+                        "";
+                        break;
+                    default:
+                        $this->redirect("?page=login&type=user");
+                }
             }
         }
 
@@ -27,6 +51,7 @@
         public function setSession($user)
         {
             $_SESSION["user"] = $user->getID();
+            $_SESSION["email"] = $user->getEmail();
         }
 
         public function deleteSession()

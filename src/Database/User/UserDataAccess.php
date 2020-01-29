@@ -16,6 +16,68 @@
             $this->dbConn = $dbConn;
         }
 
+        public function create($user)
+        {
+            $query = "INSERT INTO user(NAME, SURNAME, EMAIL, PASSWORD, GAS_STATION_NAME) ";
+            $query .= "VALUES (:name, :surname, :email, :pass, :gstation)";
+
+            $params[":name"] = $user->getName();
+            $params[":surname"] = $user->getSurname();
+            $params[":email"] = $user->getEmail();
+            $params[":pass"] = $user->getPassword();
+            $params[":gstation"] = $user->getGasStation();
+
+            $dbResult = $this->dbConn->executeQuery($query, $params);
+
+            if ($this->dbErrorCheck($dbResult)) {
+
+                $statement = $dbResult["statement"];
+                
+                $this->response["success"] = true;
+                $this->response["result"] = $statement->rowCount() > 0;
+
+            }
+
+            return $this->response;
+            
+        }
+
+        public function retrieve($email)
+        {
+            $query = "SELECT * FROM user WHERE EMAIL = :email";
+            $params = [":email" => $email];
+
+            $dbResult = $this->dbConn->executeQuery($query, $params);
+
+            if ($this->dbErrorCheck($dbResult)) {
+
+                $this->response["success"] = true;
+                $statement = $dbResult["statement"];
+                
+                if ($statement->rowCount() > 0) {
+
+                    $this->response["result"] = $statement->fetchObject();
+
+                } else {
+
+                    $this->response["result"] = false;
+                }
+
+            }
+
+            return $this->response;
+        }
+
+        public function update($entity)
+        {
+            
+        }
+
+        public function delete($id)
+        {
+
+        }
+
         public function getLastInsertID()
         {
             return $this->dbConn->lastInsertID();
@@ -110,56 +172,5 @@
 
             return $this->response;
         }
-
-        public function addUser($user)
-        {
-            $query = "INSERT INTO user(NAME, SURNAME, EMAIL, PASSWORD, GAS_STATION_NAME) ";
-            $query .= "VALUES (:name, :surname, :email, :pass, :gstation)";
-
-            $params[":name"] = $user->getName();
-            $params[":surname"] = $user->getSurname();
-            $params[":email"] = $user->getEmail();
-            $params[":pass"] = $user->getPassword();
-            $params[":gstation"] = $user->getGasStation();
-
-            $dbResult = $this->dbConn->executeQuery($query, $params);
-
-            if ($this->dbErrorCheck($dbResult)) {
-
-                $statement = $dbResult["statement"];
-                
-                $this->response["success"] = true;
-                $this->response["result"] = $statement->rowCount() > 0;
-
-            }
-
-            return $this->response;
-            
-        }
-
-        public function getUserWithEmail($email)
-        {
-            $query = "SELECT * FROM user WHERE EMAIL = :email";
-            $params = [":email" => $email];
-
-            $dbResult = $this->dbConn->executeQuery($query, $params);
-
-            if ($this->dbErrorCheck($dbResult)) {
-
-                $this->response["success"] = true;
-                $statement = $dbResult["statement"];
-                
-                if ($statement->rowCount() > 0) {
-
-                    $this->response["result"] = $statement->fetchObject();
-
-                } else {
-
-                    $this->response["result"] = false;
-                }
-
-            }
-
-            return $this->response;
-        }
+        
     }
