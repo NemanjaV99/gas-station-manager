@@ -11,6 +11,10 @@
             "home" => "src/Page/User/home.php",
             "logout" => "src/Page/User/logout.php",
             "view-all" => "src/Page/User/view-all.php"
-        ]
+        ],
 
+        "Employee" => [
+
+            "view-all" => "src/Page/Employee/view-all.php"
+        ]
     ];

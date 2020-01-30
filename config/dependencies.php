@@ -36,9 +36,26 @@
             return new GSManager\BLogic\User\GetUser($c->get("UserDataAccess"));
         },
 
+        /** Business Logic - Employee */
+        "GetEmployee" => function (ContainerInterface $c) {
+            return new GSManager\BLogic\Employee\GetEmployee($c->get("EmployeeDataAccess"));
+        },
+
         /** Entity */
         "User" => function () {
             return new GSManager\Domain\Entity\User();
+        },
+
+        "Employee" => function () {
+            return new GSManager\Domain\Entity\Employee();
+        },
+
+        "Fuel" => function () {
+            return new GSManager\Domain\Entity\Fuel();
+        },
+
+        "GasStation" => function () {
+            return new GSManager\Domain\Entity\GasStation();
         },
 
         /** Database */
@@ -46,9 +63,13 @@
             return new GSManager\Database\DatabaseConnection($c->get("DatabaseConfig"));
         },
 
-        /** Data Access - User */
+        /** Data Access*/
         "UserDataAccess" => function (ContainerInterface $c) {
             return new GSManager\Database\User\UserDataAccess($c->get("DatabaseConnection"));
+        },
+
+        "EmployeeDataAccess" => function (ContainerInterface $c) {
+            return new GSManager\Database\Employee\EmployeeDataAccess($c->get("DatabaseConnection"));
         }
 
         

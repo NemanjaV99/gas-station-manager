@@ -82,18 +82,6 @@
             return $this->dbConn->lastInsertID();
         }
 
-        public function dbErrorCheck($dbResult)
-        {
-            if (isset($dbResult["db_error"])) {
-
-                $this->response["success"] = false;
-                $this->response["error"] = "Something went wrong. Please try again soon.";
-                return false;
-            }
-
-            return true;
-        }
-
         public function checkUserEmployee($name, $surname)
         {   
 
@@ -196,6 +184,18 @@
             }
 
             return $this->response;
+        }
+
+        private function dbErrorCheck($dbResult)
+        {
+            if (isset($dbResult["db_error"])) {
+
+                $this->response["success"] = false;
+                $this->response["error"] = "Something went wrong. Please try again soon.";
+                return false;
+            }
+
+            return true;
         }
         
     }
