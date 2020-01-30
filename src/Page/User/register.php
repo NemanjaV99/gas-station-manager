@@ -15,7 +15,12 @@
     <title>Register User</title>
 </head>
 <body>
-    
+    <div class="menu">
+        <a class="link" href="index.php?page=login&type=user">Login</a>
+        <a class="link" href="index.php?page=register&type=user">Register</a>
+    </div>
+    <div class="container">
+    <h1 class="header-main header">Register</h1>
     <form action="#" method="POST" class="form">
         <label for="input-name">Name:</label>
         <input type="text" name="name" class="form__input" id="input-name">
@@ -31,29 +36,33 @@
             <option value="2">Pumpa B</option>
             <option value="3">Pumpa C</option>
         </select>
-        <input type="submit" name="register" value="Register">
+        <input type="submit" name="register" value="Register" class="form__input">
     </form>
+        
+        <?php
+
+        if (isset($_POST["register"])) {
+
+            $registerUser = $this->container->get("RegisterUser");
+            $result = $registerUser->register();
+
+            if ($result["success"]) {
+
+                $user = $result["data"];
+                $session->setSession($user);
+                $session->redirect("?page=home&type=user");
+
+            } else {
+
+                echo "<div class='error'>" . $result["error"] . "</div>";
+            }
+
+        }
+    ?>
+
+    </div>
 
 </body>
 </html>
 
-<?php
-
-    if (isset($_POST["register"])) {
-
-        $registerUser = $this->container->get("RegisterUser");
-        $result = $registerUser->register();
-
-        if ($result["success"]) {
-
-            $user = $result["data"];
-            $session->setSession($user);
-            $session->redirect("?page=home&type=user");
-
-        } else {
-
-            echo $result["error"];
-        }
-
-    }
 
