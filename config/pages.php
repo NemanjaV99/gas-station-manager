@@ -16,5 +16,9 @@
         "Employee" => [
 
             "view-all" => "src/Page/Employee/view-all.php"
+        ],
+
+        "Stock" => [
+            "view-all" => "src/Page/Stock/view-all.php"
         ]
     ];

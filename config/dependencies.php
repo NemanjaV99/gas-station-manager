@@ -41,6 +41,11 @@
             return new GSManager\BLogic\Employee\GetEmployee($c->get("EmployeeDataAccess"));
         },
 
+        /** Business Logic - Store */
+        "GetStock" => function (ContainerInterface $c) {
+            return new GSManager\BLogic\Stock\GetStock($c->get("StockDataAccess"));
+        },
+
         /** Entity */
         "User" => function () {
             return new GSManager\Domain\Entity\User();
@@ -70,6 +75,10 @@
 
         "EmployeeDataAccess" => function (ContainerInterface $c) {
             return new GSManager\Database\Employee\EmployeeDataAccess($c->get("DatabaseConnection"));
+        },
+
+        "StockDataAccess" => function (ContainerInterface $c) {
+            return new GSManager\Database\Stock\StockDataAccess($c->get("DatabaseConnection"));
         }
 
         
