@@ -3,6 +3,7 @@
     return [
 
         "Default" => "src/Page/intro.php",
+        "404" => "src/Page/404.php",
 
         "User" => [
 

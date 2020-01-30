@@ -1,7 +1,7 @@
 <?php
 
-    require_once "vendor/autoload.php";
-    $dependencies = require_once "config/dependencies.php";
+    require_once dirname(__DIR__) . "/vendor/autoload.php";
+    $dependencies = require_once dirname(__DIR__) . "/config/dependencies.php";
 
     $containerBuilder = new DI\ContainerBuilder();
     $containerBuilder->addDefinitions($dependencies);
