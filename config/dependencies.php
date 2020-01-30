@@ -5,12 +5,21 @@
 
     return [
 
-        "Config" => require_once "config.php",
+        "App" => function (ContainerInterface $c) {
+            return new GSManager\App(
+                $c->get("Config"), 
+                $c->get("PageSettings"));
+        },
 
         "DatabaseConfig" => require_once "db.php",
+        "Config" => require_once "config.php",
 
         "Session" => function (ContainerInterface $c) {
-            return new \GSManager\Utility\Session();
+            return new GSManager\Utility\Session();
+        },
+
+        "PageSettings" => function (ContainerInterface $c) {
+            return new GSManager\Page\PageSettings();
         },
 
         /** Business Logic - User */

@@ -1,6 +1,6 @@
 <?php
 
-    $session = $container->get("Session");
+    $session = $this->container->get("Session");
     $session->checkSessionAndRedirect(basename(__FILE__, ".php"));
 
 ?>
@@ -11,43 +11,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>View all Gas Station Fuel</title>
+    <link href="<?php echo $this->pageSettings->getStyle() ?>" rel="stylesheet">
+    <title>View Current Stock</title>
 </head>
 <body>
     <?php
         
-        $getStock = $container->get("GetStock");
+        $getStock = $this->container->get("GetStock");
         $result = $getStock->get();
 
         if ($result["success"]) {
 
-            // We got the data
-
-            $data = $result["result"];
-
-            echo "<table class='display-data' border=1>";
-
-            // Display headers 
-            echo "<tr>";
-            foreach ($data[0] as $key => $value) {
-                echo "<th>$key</th>";
-            }
-            echo "</tr>";
-
-            // Display data
-            foreach ($data as $array) {
-
-                echo "<tr>";
-
-                foreach ($array as $row) {
-                    echo "<td>$row</td>";
-                }
-
-                echo "</tr>";
-            }
-
-            echo "</table>";
-
+            $this->pageSettings->createDisplayDataTable($result);
 
         } else {
 
