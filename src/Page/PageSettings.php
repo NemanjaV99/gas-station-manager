@@ -42,4 +42,16 @@
             echo "</table>";
         }
 
+        public function checkAdmin($admin)
+        {
+            if (isset($_SESSION["user"])) {
+
+                if ($_SESSION["role"] != $admin) {
+
+                    header("Location: index.php?page=home&type=user");
+                    exit();
+                }
+            }
+        }
+
     }

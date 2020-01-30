@@ -52,6 +52,7 @@
         {
             $_SESSION["user"] = $user->getID();
             $_SESSION["email"] = $user->getEmail();
+            $_SESSION["role"] = $user->getRole();
         }
 
         public function deleteSession()

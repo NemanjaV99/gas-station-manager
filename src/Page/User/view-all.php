@@ -2,7 +2,8 @@
 
     $session = $this->container->get("Session");
     $session->checkSessionAndRedirect(basename(__FILE__, ".php"));
-
+    $this->pageSettings->checkAdmin($this->config["UserSettings"]["ADMIN"]);
+    
 ?>
 
 <!DOCTYPE html>
