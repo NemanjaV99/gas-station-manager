@@ -42,6 +42,7 @@
     
                 if ($stmtResult) {
 
+                    $statement->setFetchMode(PDO::FETCH_ASSOC);
                     $this->dbResponse["statement"] = $statement;
 
                 } else {

@@ -32,6 +32,10 @@
             return new GSManager\BLogic\User\UserValidator();
         },
 
+        "GetUser" => function (ContainerInterface $c) {
+            return new GSManager\BLogic\User\GetUser($c->get("UserDataAccess"));
+        },
+
         /** Entity */
         "User" => function () {
             return new GSManager\Domain\Entity\User();

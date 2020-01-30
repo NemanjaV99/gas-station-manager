@@ -14,5 +14,6 @@
 <body>
     <h1>User Home</h1>
     <a href="index.php?page=logout&type=user">Log out</a>
+    <a href="index.php?page=view-all&type=user">View all users</a>
 </body>
 </html>

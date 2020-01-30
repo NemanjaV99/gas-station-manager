@@ -42,12 +42,11 @@
             
         }
 
-        public function retrieve($email)
+        public function retrieve()
         {
-            $query = "SELECT * FROM user WHERE EMAIL = :email";
-            $params = [":email" => $email];
+            $query = "SELECT * FROM user";
 
-            $dbResult = $this->dbConn->executeQuery($query, $params);
+            $dbResult = $this->dbConn->executeQuery($query);
 
             if ($this->dbErrorCheck($dbResult)) {
 
@@ -56,7 +55,7 @@
                 
                 if ($statement->rowCount() > 0) {
 
-                    $this->response["result"] = $statement->fetchObject();
+                    $this->response["result"] = $statement->fetchAll();
 
                 } else {
 
@@ -167,6 +166,32 @@
                 
                 $this->response["success"] = true;
                 $this->response["result"] = $statement->fetchColumn();
+
+            }
+
+            return $this->response;
+        }
+
+        public function getUserFromEmail($email)
+        {
+            $query = "SELECT * FROM user WHERE EMAIL = :email";
+            $params = [":email" => $email];
+
+            $dbResult = $this->dbConn->executeQuery($query, $params);
+
+            if ($this->dbErrorCheck($dbResult)) {
+
+                $this->response["success"] = true;
+                $statement = $dbResult["statement"];
+                
+                if ($statement->rowCount() > 0) {
+
+                    $this->response["result"] = $statement->fetchObject();
+
+                } else {
+
+                    $this->response["result"] = false;
+                }
 
             }
 
