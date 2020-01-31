@@ -46,6 +46,29 @@ a.link {
     margin: 10px auto;
 }
 
+table.display-data {
+    margin: 15px auto;
+    border-collapse: collapse;
+}
+
+table.display-data th,
+table.display-data td {
+    padding: 5px;
+}
+
+table.display-data th {
+    background-color: #cf0714;
+    color: #fff;
+}
+
+table.display-data tr:nth-child(2n+1) {
+    background-color: #99e5f8;
+}
+
+table, th, td {
+    border: 1px solid #000;
+}
+
 .error {
     color: #ce020f;
 }

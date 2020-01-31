@@ -15,21 +15,32 @@
     <title>View Current Stock</title>
 </head>
 <body>
-    <?php
-        
-        $getStock = $this->container->get("GetStock");
-        $result = $getStock->get();
+    <?php require_once "../src/Page/menu.php"; ?>
+    <div class="container">
+        <h1 class="header-main header">Stock</h1>
+        <?php
+            
+            $getStock = $this->container->get("GetStock");
+            $result = $getStock->get();
 
-        if ($result["success"]) {
+            if ($result["success"]) {
 
-            $this->pageSettings->createDisplayDataTable($result);
+                $this->pageSettings->createDisplayDataTable($result);
 
-        } else {
+            } else {
 
-            echo isset($result["error"]) ? $result["error"] : "";
-        }
+                if (isset($result["error"])) {
+
+                    echo "<div class='error'>" . $result["error"] . "</div>";
+
+                } else {
+
+                    echo "<div class='no-result'>No stock info in database.</div>";
+                }
+            }
 
 
-    ?>
+        ?>
+    </div>
 </body>
 </html>

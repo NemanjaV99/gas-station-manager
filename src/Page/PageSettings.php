@@ -18,7 +18,7 @@
 
             $data = $result["result"];
 
-            echo "<table class='display-data' border=1>";
+            echo "<table class='display-data'>";
 
             // Display headers 
             echo "<tr>";
@@ -46,11 +46,7 @@
         {
             if (isset($_SESSION["user"])) {
 
-                if ($_SESSION["role"] != $admin) {
-
-                    header("Location: index.php?page=home&type=user");
-                    exit();
-                }
+                return $_SESSION["role"] == $admin;
             }
         }
 

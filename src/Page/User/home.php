@@ -13,8 +13,9 @@
     <title>Home</title>
 </head>
 <body>
-    <h1>User Home</h1>
-    <a href="index.php?page=logout&type=user">Log out</a>
-    <a href="index.php?page=view-all&type=user">View all users</a>
+    <?php require_once "../src/Page/menu.php"; ?>
+    <div class="container">
+        <h1 class="header-main header">User Home</h1>
+    </div>
 </body>
 </html>

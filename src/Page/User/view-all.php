@@ -2,7 +2,13 @@
 
     $session = $this->container->get("Session");
     $session->checkSessionAndRedirect(basename(__FILE__, ".php"));
-    $this->pageSettings->checkAdmin($this->config["UserSettings"]["ADMIN"]);
+    if (!$this->pageSettings->checkAdmin($this->config["UserSettings"]["ADMIN"])) {
+
+        // If true, it means that user is admin.
+        // Otherwise it means he is not, so he can't access this page.
+        header("Location: index.php?page=home&type=user");
+        exit();
+    }
     
 ?>
 
@@ -16,22 +22,32 @@
     <title>View all users</title>
 </head>
 <body>
-    
-    <?php
+    <?php require_once "../src/Page/menu.php"; ?>
+    <div class="container">
+        <h1 class="header-main header">Users</h1>
+        <?php
 
-        $getUser = $this->container->get("GetUser");
-        $result = $getUser->get();
+            $getUser = $this->container->get("GetUser");
+            $result = $getUser->get();
 
-        if ($result["success"]) {
+            if ($result["success"]) {
 
-            $this->pageSettings->createDisplayDataTable($result);
+                $this->pageSettings->createDisplayDataTable($result);
 
-        } else {
+            } else {
 
-            echo isset($result["error"]) ? $result["error"] : "";
-        }
+                if (isset($result["error"])) {
 
-    ?>
+                    echo "<div class='error'>" . $result["error"] . "</div>";
+
+                } else {
+
+                    echo "<div class='no-result'>No users in database.</div>";
+                }
+            }
+
+        ?>
+    </div>
 
 </body>
 </html>
