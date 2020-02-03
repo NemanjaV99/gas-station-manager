@@ -74,7 +74,21 @@
 
         public function delete($id)
         {
+            $query = "DELETE FROM user WHERE ID_USER = :id";
+            $params[":id"] = $id;
 
+            $dbResult = $this->dbConn->executeQuery($query, $params);
+
+            if ($this->dbErrorCheck($dbResult)) {
+
+                $statement = $dbResult["statement"];
+                
+                $this->response["success"] = true;
+                $this->response["result"] = $statement->rowCount() > 0;
+
+            }
+
+            return $this->response;
         }
 
         public function getLastInsertID()

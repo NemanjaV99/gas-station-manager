@@ -22,10 +22,9 @@
 
         public function retrieve()
         {
-            $query = "SELECT gs.NAME AS GAS_STATION_NAME, f.NAME AS FUEL_NAME, gsf.AMOUNT_LITER ";
+            $query = "SELECT gsf.ID_GAS_STATION_FUEL, gs.NAME AS GAS_STATION_NAME, f.NAME AS FUEL_NAME, gsf.AMOUNT_LITER ";
             $query .= "FROM gas_station_fuel gsf JOIN gas_station gs ON gsf.ID_GAS_STATION ";
             $query .= "= gs.ID_GAS_STATION JOIN fuel f ON gsf.ID_FUEL = f.ID_FUEL ";
-            $query .= "ORDER BY gs.NAME";
 
             $dbResult = $this->dbConn->executeQuery($query);
 
@@ -55,7 +54,21 @@
 
         public function delete($id)
         {
-            
+            $query = "DELETE FROM gas_station_fuel WHERE ID_GAS_STATION_FUEL = :id";
+            $params[":id"] = $id;
+
+            $dbResult = $this->dbConn->executeQuery($query, $params);
+
+            if ($this->dbErrorCheck($dbResult)) {
+
+                $statement = $dbResult["statement"];
+                
+                $this->response["success"] = true;
+                $this->response["result"] = $statement->rowCount() > 0;
+
+            }
+
+            return $this->response;
         }
 
         public function getLastInsertID()

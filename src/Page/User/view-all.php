@@ -46,6 +46,26 @@
                 }
             }
 
+             // Delete User
+             echo "<h2 class='header'>Delete User</h2>";
+             require_once "../src/Page/delete.php";
+ 
+             if (isset($_POST["submit-delete"])) {
+ 
+                 $deleteUser = $this->container->get("DeleteUser");
+                 $deleteResult = $deleteUser->delete();
+ 
+                 if ($deleteResult["success"]) {
+ 
+                     header("Location: index.php?page=view-all&type=user");
+                     exit();
+ 
+                 } else {
+ 
+                     echo "<div class='error'>" . $deleteResult["error"] . "</div>";
+                 }
+             }
+
         ?>
     </div>
 

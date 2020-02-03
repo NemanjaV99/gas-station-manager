@@ -45,6 +45,10 @@
             return new GSManager\BLogic\User\GetUser($c->get("UserDataAccess"));
         },
 
+        "DeleteUser" => function (ContainerInterface $c) {
+            return new GSManager\BLogic\User\DeleteUser($c->get("UserDataAccess"));
+        },
+
         /** Business Logic - Employee */
         "GetEmployee" => function (ContainerInterface $c) {
             return new GSManager\BLogic\Employee\GetEmployee($c->get("EmployeeDataAccess"));
@@ -65,6 +69,10 @@
         /** Business Logic - Store */
         "GetStock" => function (ContainerInterface $c) {
             return new GSManager\BLogic\Stock\GetStock($c->get("StockDataAccess"));
+        },
+
+        "DeleteStock" => function (ContainerInterface $c) {
+            return new GSManager\BLogic\Stock\DeleteStock($c->get("StockDataAccess"));
         },
 
         /** Entity */

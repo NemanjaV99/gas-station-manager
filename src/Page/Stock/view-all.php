@@ -40,6 +40,27 @@
             }
 
 
+             // Delete Stock
+             echo "<h2 class='header'>Delete Stock</h2>";
+             require_once "../src/Page/delete.php";
+ 
+             if (isset($_POST["submit-delete"])) {
+ 
+                 $deleteStock = $this->container->get("DeleteStock");
+                 $deleteResult = $deleteStock->delete();
+ 
+                 if ($deleteResult["success"]) {
+ 
+                     header("Location: index.php?page=view-all&type=employee");
+                     exit();
+ 
+                 } else {
+ 
+                     echo "<div class='error'>" . $deleteResult["error"] . "</div>";
+                 }
+             }
+
+
         ?>
     </div>
 </body>
