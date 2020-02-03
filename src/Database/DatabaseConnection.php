@@ -68,7 +68,7 @@
 
         private function logErrorFile($errorMessage, $errorCode)
         {
-            $file = fopen("src/Database/db-error-log.txt", "a+");
+            $file = fopen("../src/Database/db-error-log.txt", "a+");
 
             $content = "Date: " . date("d.m.Y / h:i:s", time()) . PHP_EOL;
             $content .= "Error Message: " . $errorMessage . PHP_EOL;

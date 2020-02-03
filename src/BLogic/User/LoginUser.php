@@ -4,7 +4,7 @@
 
     use GSManager\Domain\Entity\User;
     use GSManager\Domain\Repository\IUserRepository;
-    use GSManager\BLogic\User\UserValidator;
+    use GSManager\BLogic\Validator;
 
     class LoginUser
     {
@@ -14,11 +14,11 @@
         private $requestData;
         private $result;
 
-        public function __construct(User $user, IUserRepository $userRepository, UserValidator $userValidator)
+        public function __construct(User $user, IUserRepository $userRepository, Validator $validator)
         {
             $this->user = $user;
             $this->repository = $userRepository;
-            $this->validator = $userValidator;
+            $this->validator = $validator;
         }
 
         public function login()

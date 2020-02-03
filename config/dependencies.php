@@ -27,18 +27,18 @@
             return new GSManager\BLogic\User\LoginUser(
                 $c->get("User"), 
                 $c->get("UserDataAccess"), 
-                $c->get("UserValidator"));
+                $c->get("Validator"));
         },
 
         "RegisterUser" => function (ContainerInterface $c) {
             return new GSManager\BLogic\User\RegisterUser(
                 $c->get("User"), 
                 $c->get("UserDataAccess"), 
-                $c->get("UserValidator"));
+                $c->get("Validator"));
         },
 
-        "UserValidator" => function () {
-            return new GSManager\BLogic\User\UserValidator();
+        "Validator" => function () {
+            return new GSManager\BLogic\Validator();
         },
 
         "GetUser" => function (ContainerInterface $c) {
@@ -49,6 +49,14 @@
         "GetEmployee" => function (ContainerInterface $c) {
             return new GSManager\BLogic\Employee\GetEmployee($c->get("EmployeeDataAccess"));
         },
+
+        "CreateEmployee" => function (ContainerInterface $c) {
+            return new GSManager\BLogic\Employee\CreateEmployee(
+                $c->get("EmployeeDataAccess"), 
+                $c->get("Validator"), 
+                $c->get("Employee"));
+        },
+
 
         /** Business Logic - Store */
         "GetStock" => function (ContainerInterface $c) {

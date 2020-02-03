@@ -2,7 +2,7 @@
 
     namespace GSManager\BLogic;
 
-    abstract class Validator
+    class Validator
     {
         protected $error;
 
@@ -45,5 +45,34 @@
         public function checkAlphaChars($input)
         {
             return ctype_alpha($input);
+        }
+
+        public function validateName($name)
+        {
+            if ($this->checkAlphaChars($name)) {
+
+                return true;
+
+            } else {
+
+                $this->error = "Name/Surname can only contain alphabetic characters.";
+                return false;
+            }
+        }
+
+        public function validateEmail($email)
+        {
+            if (filter_var($email, FILTER_VALIDATE_EMAIL) !== false) {
+                return true;
+            } else {
+
+                $this->error = "Email is not valid.";
+                return false;
+            }
+        }
+
+        public function changeNameCase($name)
+        {
+            return ucfirst(strtolower($name));
         }
     }

@@ -2,10 +2,10 @@
 
     namespace GSManager\Database\Employee;
 
-    use GSManager\Domain\Repository\IDataAccess;
     use GSManager\Database\DatabaseConnection;
+    use GSManager\Domain\Repository\IEmployeeRepository;
 
-    class EmployeeDataAccess implements IDataAccess
+    class EmployeeDataAccess implements IEmployeeRepository
     {
         private $dbConn;
         private $response;
@@ -15,9 +15,31 @@
             $this->dbConn = $dbConn;
         }
 
-        public function create($entity)
+        public function create($employee)
         {
-            
+            $query = "INSERT INTO employee(NAME, SURNAME, EXPERIENCE, SALARY, ";
+            $query .= "VACATION_DAYS, ID_GAS_STATION) ";
+            $query .= "VALUES (:name, :surname, :experience, :salary, :vdays, :gsID)";
+
+            $params[":name"] = $employee->getName();
+            $params[":surname"] = $employee->getSurname();
+            $params[":experience"] = $employee->getExperience();
+            $params[":salary"] = $employee->getSalary();
+            $params[":vdays"] = $employee->getVacationDays();
+            $params[":gsID"] = $employee->getIDGasStation();
+
+            $dbResult = $this->dbConn->executeQuery($query, $params);
+
+            if ($this->dbErrorCheck($dbResult)) {
+
+                $statement = $dbResult["statement"];
+                
+                $this->response["success"] = true;
+                $this->response["result"] = $statement->rowCount() > 0;
+
+            }
+
+            return $this->response;
         }
 
         public function retrieve()

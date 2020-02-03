@@ -46,6 +46,26 @@
                     echo "<div class='no-result'>No employees in database.</div>";
                 }
             }
+
+            echo "<h2 class='header'>Create a new Employee</h2>";
+            require_once "../src/Page/Employee/add-new.php";
+
+
+            if (isset($_POST["new-employee"])) {
+
+                $createEmployee = $this->container->get("CreateEmployee");
+                $result = $createEmployee->create();
+
+                if ($result["success"]) {
+
+                    header("Location: index.php?page=view-all&type=employee");
+                    exit();
+
+                } else {
+
+                    echo "<div class='error'>" . $result["error"] . "</div>";
+                }
+            }
         ?>
     </div>
 </body>

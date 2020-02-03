@@ -2,7 +2,7 @@
 
     namespace GSManager\Domain\Repository;
 
-    interface IUserRepository extends IDataAccess
+    interface IUserRepository extends IRepository
     {
         public function checkUserEmployee($name, $surname);
         public function checkEmployeeGasStation($name, $surname, $gasStationID);

@@ -3,11 +3,11 @@
     namespace GSManager\BLogic\User;
 
     use GSManager\BLogic\AbstractGetEntity;
-    use GSManager\Domain\Repository\IDataAccess;
+    use GSManager\Domain\Repository\IUserRepository;
 
     class GetUser extends AbstractGetEntity
     {
-        public function __construct(IDataAccess $repository)
+        public function __construct(IUserRepository $repository)
         {
             $this->repository = $repository;
         }

@@ -2,10 +2,10 @@
 
     namespace GSManager\Database\Stock;
 
-    use GSManager\Domain\Repository\IDataAccess;
     use GSManager\Database\DatabaseConnection;
+    use GSManager\Domain\Repository\IStockRepository;
 
-    class StockDataAccess implements IDataAccess
+    class StockDataAccess implements IStockRepository
     {
         private $dbConn;
         private $response;

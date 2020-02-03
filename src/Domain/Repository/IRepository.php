@@ -2,7 +2,7 @@
 
     namespace GSManager\Domain\Repository;
 
-    interface IDataAccess
+    interface IRepository
     {
         public function create($entity);
         public function retrieve();

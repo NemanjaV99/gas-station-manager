@@ -33,7 +33,7 @@ a.link {
 
 .form {
     width: 750px;
-    margin: 50px auto;
+    margin: 30px auto;
     background-color: #f3f3f3;
     padding: 10px;
     border-radius: 20px;
@@ -47,7 +47,7 @@ a.link {
 }
 
 table.display-data {
-    margin: 15px auto;
+    margin: 30px auto;
     border-collapse: collapse;
 }
 
@@ -71,4 +71,8 @@ table, th, td {
 
 .error {
     color: #ce020f;
+}
+
+.success-msg {
+    color: #03af11;
 }
