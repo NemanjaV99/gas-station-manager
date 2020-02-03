@@ -40,26 +40,49 @@
             }
 
 
-             // Delete Stock
-             echo "<h2 class='header'>Delete Stock</h2>";
-             require_once "../src/Page/delete.php";
- 
-             if (isset($_POST["submit-delete"])) {
- 
-                 $deleteStock = $this->container->get("DeleteStock");
-                 $deleteResult = $deleteStock->delete();
- 
-                 if ($deleteResult["success"]) {
- 
-                     header("Location: index.php?page=view-all&type=employee");
-                     exit();
- 
-                 } else {
- 
-                     echo "<div class='error'>" . $deleteResult["error"] . "</div>";
-                 }
-             }
+            // Only if user is an admin, then he can delete stock
+            if ($this->pageSettings->checkAdmin($this->config["UserSettings"]["ADMIN"])) {
 
+                // Delete Stock
+                echo "<h2 class='header'>Delete Stock</h2>";
+                require_once "../src/Page/delete.php";
+    
+                if (isset($_POST["submit-delete"])) {
+    
+                    $deleteStock = $this->container->get("DeleteStock");
+                    $deleteResult = $deleteStock->delete();
+    
+                    if ($deleteResult["success"]) {
+    
+                        header("Location: index.php?page=view-all&type=employee");
+                        exit();
+    
+                    } else {
+    
+                        echo "<div class='error'>" . $deleteResult["error"] . "</div>";
+                    }
+                }
+            }
+
+            // Update Stock
+            echo "<h2 class='header'>Update Stock</h2>";
+            require_once "../src/Page/Stock/update.php";
+
+            if (isset($_POST["submit-update"])) {
+
+                $updateStock = $this->container->get("UpdateStock");
+                $updateResult = $updateStock->update();
+
+                if ($updateResult["success"]) {
+
+                    header("Location: index.php?page=view-all&type=stock");
+                    exit();
+
+                } else {
+
+                    echo "<div class='error'>" . $deleteResult["error"] . "</div>";
+                }
+            }
 
         ?>
     </div>

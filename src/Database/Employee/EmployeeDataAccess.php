@@ -93,7 +93,7 @@
 
         public function getLastInsertID()
         {
-            
+            return $this->dbConn->lastInsertID();
         }
 
         private function dbErrorCheck($dbResult)

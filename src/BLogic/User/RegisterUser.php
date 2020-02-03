@@ -204,7 +204,7 @@
             // If result is true, user has been successfully added to the DB
             if ($dbResult["success"] && $dbResult["result"]) {
 
-                $this->response["success"] = true;
+                $this->result["success"] = true;
 
             } else {
 

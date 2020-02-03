@@ -47,9 +47,28 @@
             return $this->response;
         }
 
-        public function update($entity)
+        public function update($data)
         {
-            
+            $query = "UPDATE gas_station_fuel ";
+            $query .= "SET AMOUNT_LITER = :amount ";
+            $query .= "WHERE ID_GAS_STATION = :gsID AND ID_FUEL = :fuelID";
+
+            $params[":amount"] = $data["amount"];
+            $params[":gsID"] = $data["gas_station_id"];
+            $params[":fuelID"] = $data["fuel_id"];
+
+            $dbResult = $this->dbConn->executeQuery($query, $params);
+
+            if ($this->dbErrorCheck($dbResult)) {
+
+                $statement = $dbResult["statement"];
+                
+                $this->response["success"] = true;
+                $this->response["result"] = $statement->rowCount() > 0;
+
+            }
+
+            return $this->response;
         }
 
         public function delete($id)
@@ -73,7 +92,7 @@
 
         public function getLastInsertID()
         {
-            
+            return $this->dbConn->lastInsertID();
         }
 
         private function dbErrorCheck($dbResult)

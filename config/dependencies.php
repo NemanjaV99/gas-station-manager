@@ -75,6 +75,11 @@
             return new GSManager\BLogic\Stock\DeleteStock($c->get("StockDataAccess"));
         },
 
+        "UpdateStock" => function (ContainerInterface $c) {
+            return new GSManager\BLogic\Stock\UpdateStock($c->get("StockDataAccess"));
+        },
+
+
         /** Entity */
         "User" => function () {
             return new GSManager\Domain\Entity\User();
