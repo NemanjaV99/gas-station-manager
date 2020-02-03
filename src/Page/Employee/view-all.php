@@ -28,18 +28,19 @@
         <h1 class="header-main header">Employees</h1>
         <?php
         
+            // Display All Employees
             $getEmployee = $this->container->get("GetEmployee");
-            $result = $getEmployee->get();
+            $getResult = $getEmployee->get();
 
-            if ($result["success"]) {
+            if ($getResult["success"]) {
 
-                $this->pageSettings->createDisplayDataTable($result);
+                $this->pageSettings->createDisplayDataTable($getResult);
 
             } else {
 
-                if (isset($result["error"])) {
+                if (isset($getResult["error"])) {
 
-                    echo "<div class='error'>" . $result["error"] . "</div>";
+                    echo "<div class='error'>" . $getResult["error"] . "</div>";
 
                 } else {
 
@@ -47,6 +48,7 @@
                 }
             }
 
+            // Create a new Employee
             echo "<h2 class='header'>Create a new Employee</h2>";
             require_once "../src/Page/Employee/add-new.php";
 
@@ -54,16 +56,36 @@
             if (isset($_POST["new-employee"])) {
 
                 $createEmployee = $this->container->get("CreateEmployee");
-                $result = $createEmployee->create();
+                $createResult = $createEmployee->create();
 
-                if ($result["success"]) {
+                if ($createResult["success"]) {
 
                     header("Location: index.php?page=view-all&type=employee");
                     exit();
 
                 } else {
 
-                    echo "<div class='error'>" . $result["error"] . "</div>";
+                    echo "<div class='error'>" . $createResult["error"] . "</div>";
+                }
+            }
+
+            // Delete Employee
+            echo "<h2 class='header'>Delete Employee</h2>";
+            require_once "../src/Page/delete.php";
+
+            if (isset($_POST["submit-delete"])) {
+
+                $deleteEmployee = $this->container->get("DeleteEmployee");
+                $deleteResult = $deleteEmployee->delete();
+
+                if ($deleteResult["success"]) {
+
+                    header("Location: index.php?page=view-all&type=employee");
+                    exit();
+
+                } else {
+
+                    echo "<div class='error'>" . $deleteResult["error"] . "</div>";
                 }
             }
         ?>
