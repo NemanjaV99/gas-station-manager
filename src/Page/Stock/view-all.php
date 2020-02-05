@@ -39,12 +39,12 @@
                 }
             }
 
+            echo "<div class='flex-container'>";
 
             // Only if user is an admin, then he can delete stock
             if ($this->pageSettings->checkAdmin($this->config["UserSettings"]["ADMIN"])) {
 
                 // Delete Stock
-                echo "<h2 class='header'>Delete Stock</h2>";
                 require_once "../src/Page/delete.php";
     
                 if (isset($_POST["submit-delete"])) {
@@ -65,7 +65,6 @@
             }
 
             // Update Stock
-            echo "<h2 class='header'>Update Stock</h2>";
             require_once "../src/Page/Stock/update.php";
 
             if (isset($_POST["submit-update"])) {
@@ -104,6 +103,7 @@
             }
 
         ?>
+        </div><!-- end of flex container -->
     </div>
 </body>
 </html>

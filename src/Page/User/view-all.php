@@ -47,7 +47,6 @@
             }
 
              // Delete User
-             echo "<h2 class='header'>Delete User</h2>";
              require_once "../src/Page/delete.php";
  
              if (isset($_POST["submit-delete"])) {

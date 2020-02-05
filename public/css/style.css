@@ -39,11 +39,31 @@ a.link {
     border-radius: 20px;
     width: 400px;
     text-align: center;
+    box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.75);
+}
+
+.form label {
+    display: block;
+}
+
+.form__select {
+    margin: 5px 0;
 }
 
 .form__input {
     display: block;
     margin: 10px auto;
+}
+
+.flex-container {
+    display: flex;
+    margin: 0 30px;
+
+}
+
+.form-container {
+    flex-basis: 30%;
+    margin-left: 20px;
 }
 
 table.display-data {
@@ -73,6 +93,3 @@ table, th, td {
     color: #ce020f;
 }
 
-.success-msg {
-    color: #03af11;
-}

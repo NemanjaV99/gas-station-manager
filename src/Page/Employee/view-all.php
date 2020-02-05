@@ -48,8 +48,8 @@
                 }
             }
 
+            echo "<div class='flex-container'>";
             // Create a new Employee
-            echo "<h2 class='header'>Create a new Employee</h2>";
             require_once "../src/Page/Employee/add-new.php";
 
 
@@ -70,7 +70,6 @@
             }
 
             // Delete Employee
-            echo "<h2 class='header'>Delete Employee</h2>";
             require_once "../src/Page/delete.php";
 
             if (isset($_POST["submit-delete"])) {
@@ -89,6 +88,7 @@
                 }
             }
         ?>
+        </div><!-- end of flex container -->
     </div>
 </body>
 </html>
