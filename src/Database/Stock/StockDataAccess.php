@@ -95,6 +95,40 @@
             return $this->dbConn->lastInsertID();
         }
 
+        public function checkUserGasStation($userID, $gsID)
+        {
+            // First, get the gas station name from gas station id
+            $query = "SELECT NAME FROM gas_station WHERE ID_GAS_STATION = :id";
+            $params[":id"] = $gsID;
+
+            $dbResult = $this->dbConn->executeQuery($query, $params);
+
+            if ($this->dbErrorCheck($dbResult)) {
+
+                $statement = $dbResult["statement"];
+                
+                $gasStation = $statement->fetchColumn();
+
+                // Next, check if user with given id works for this gas station
+                $query = "SELECT ID_USER FROM user WHERE ID_USER = :id AND GAS_STATION_NAME = :gsname";
+                $params = [":id" => $userID, ":gsname" => $gasStation];
+
+                $dbResult = $this->dbConn->executeQuery($query, $params);
+
+                if ($this->dbErrorCheck($dbResult)) {
+
+                    $statement = $dbResult["statement"];
+                
+                    $this->response["success"] = true;
+                    $this->response["result"] = $statement->rowCount() > 0;
+
+                }
+                
+            }
+
+            return $this->response;
+        }
+
         private function dbErrorCheck($dbResult)
         {
             if (isset($dbResult["db_error"])) {

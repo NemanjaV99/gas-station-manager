@@ -59,4 +59,9 @@
         {
             session_destroy();
         }
+
+        public function getSessionKey($key)
+        {
+            return isset($_SESSION[$key]) ? $_SESSION[$key] : false;
+        }
     }

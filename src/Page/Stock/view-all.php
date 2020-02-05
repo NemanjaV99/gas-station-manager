@@ -71,6 +71,25 @@
             if (isset($_POST["submit-update"])) {
 
                 $updateStock = $this->container->get("UpdateStock");
+
+                /**
+                 * If user is admin he can update any gas station stock. 
+                 * If not then the user can only update the gas station where he works.
+                 */
+                if (!$this->pageSettings->checkAdmin($this->config["UserSettings"]["ADMIN"])) {
+
+
+                    // If here then user is not an admin
+                    $checkResult = $updateStock->checkUserGasStation($session->getSessionKey("user"), $_POST["gstation"]);
+
+                    if (!$checkResult["success"]) {
+
+                        echo "<div class='error'>" . $checkResult["error"] . "</div>";
+                        exit();
+    
+                    } 
+                }
+
                 $updateResult = $updateStock->update();
 
                 if ($updateResult["success"]) {
@@ -80,7 +99,7 @@
 
                 } else {
 
-                    echo "<div class='error'>" . $deleteResult["error"] . "</div>";
+                    echo "<div class='error'>" . $updateResult["error"] . "</div>";
                 }
             }
 

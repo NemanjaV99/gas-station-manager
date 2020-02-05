@@ -39,4 +39,29 @@
 
         }
 
+        public function checkUserGasStation($userID, $gsID)
+        {
+            $dbResult = $this->repository->checkUserGasStation($userID, $gsID);
+            
+            if ($dbResult["success"]) {
+
+                if ($dbResult["result"]) {
+
+                    $this->result["success"] = true;
+
+                } else {
+
+                    $this->result["success"] = false;
+                    $this->result["error"] = "You are not allowed to update stock for this Gas Station.";
+                }
+
+            } else {
+
+                $this->result["success"] = false;
+                $this->result["error"] = $dbResult["error"];
+            }
+
+            return $this->result;
+        }
+
     }
