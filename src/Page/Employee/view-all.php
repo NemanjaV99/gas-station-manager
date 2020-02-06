@@ -48,7 +48,6 @@
                 }
             }
 
-            echo "<div class='flex-container'>";
             // Create a new Employee
             require_once "../src/Page/Employee/add-new.php";
 
@@ -88,7 +87,6 @@
                 }
             }
         ?>
-        </div><!-- end of flex container -->
     </div>
 </body>
 </html>

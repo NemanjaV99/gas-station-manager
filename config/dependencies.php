@@ -79,6 +79,10 @@
             return new GSManager\BLogic\Stock\UpdateStock($c->get("StockDataAccess"));
         },
 
+        "CreateStock" => function (ContainerInterface $c) {
+            return new GSManager\BLogic\Stock\CreateStock($c->get("StockDataAccess"));
+        },
+
 
         /** Entity */
         "User" => function () {

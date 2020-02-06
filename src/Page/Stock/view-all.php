@@ -39,9 +39,7 @@
                 }
             }
 
-            echo "<div class='flex-container'>";
-
-            // Only if user is an admin, then he can delete stock
+            // Only if user is an admin, then he can delete and create new stock
             if ($this->pageSettings->checkAdmin($this->config["UserSettings"]["ADMIN"])) {
 
                 // Delete Stock
@@ -54,7 +52,7 @@
     
                     if ($deleteResult["success"]) {
     
-                        header("Location: index.php?page=view-all&type=employee");
+                        header("Location: index.php?page=view-all&type=stock");
                         exit();
     
                     } else {
@@ -62,6 +60,28 @@
                         echo "<div class='error'>" . $deleteResult["error"] . "</div>";
                     }
                 }
+
+                // Create Stock
+                require_once "../src/Page/Stock/add-new.php";
+
+                if (isset($_POST["submit-create"])) {
+
+                    $createStock = $this->container->get("CreateStock");
+                    $createResult = $createStock->create();
+
+                    if ($createResult["success"]) {
+
+                        header("Location: index.php?page=view-all&type=stock");
+                        exit();
+
+                    } else {
+
+                        echo "<div class='error'>" . $createResult["error"] . "</div>";
+                    }
+
+
+                }
+
             }
 
             // Update Stock
@@ -102,8 +122,10 @@
                 }
             }
 
+
+            
+
         ?>
-        </div><!-- end of flex container -->
     </div>
 </body>
 </html>

@@ -4,7 +4,7 @@
 
     use GSManager\Domain\Repository\IStockRepository;
 
-    class UpdateStock
+    class CreateStock
     {
         private $repository;
         private $requestData;
@@ -15,7 +15,7 @@
             $this->repository = $repository;
         }
 
-        public function update()
+        public function create()
         {
             $this->requestData["gas_station_id"] = $_POST["gstation"];
             $this->requestData["fuel_id"] = $_POST["fuel"];
@@ -24,47 +24,23 @@
             $this->checkAlreadyExists();
 
             if ($this->result["success"]) {
-            
-                $dbResult = $this->repository->update($this->requestData);
+
+                $dbResult = $this->repository->create($this->requestData);
 
                 if ($dbResult["success"] && $dbResult["result"]) {
 
                     $this->result["success"] = true;
-
+    
                 } else {
-
+    
                     $this->result["success"] = false;
                     $this->result["error"] = $dbResult["error"];
                 }
-            }
 
-                return $this->result;
-
-        }
-
-        public function checkUserGasStation($userID, $gsID)
-        {
-            $dbResult = $this->repository->checkUserGasStation($userID, $gsID);
-            
-            if ($dbResult["success"]) {
-
-                if ($dbResult["result"]) {
-
-                    $this->result["success"] = true;
-
-                } else {
-
-                    $this->result["success"] = false;
-                    $this->result["error"] = "You are not allowed to update stock for this Gas Station.";
-                }
-
-            } else {
-
-                $this->result["success"] = false;
-                $this->result["error"] = $dbResult["error"];
             }
 
             return $this->result;
+
         }
 
         private function checkAlreadyExists()
@@ -75,15 +51,15 @@
 
             if ($dbResult["success"]) {
                 
-                // If true, stock exists
-                if ($dbResult["result"]) {
+                // If true, stock already exists
+                if (!$dbResult["result"]) {
 
                     $this->result["success"] = true;
 
                 } else {
 
                     $this->result["success"] = false;
-                    $this->result["error"] = "Stock does not exists.";
+                    $this->result["error"] = "Stock already exists.";
                 }
 
             } else {
@@ -91,6 +67,7 @@
                 $this->result["success"] = false;
                 $this->result["error"] = $dbResult["error"];
             }
+
         }
 
     }

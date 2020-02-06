@@ -15,9 +15,27 @@
             $this->dbConn = $dbConn;
         }
 
-        public function create($entity)
+        public function create($data)
         {
-            
+            $query = "INSERT INTO gas_station_fuel (ID_GAS_STATION, ID_FUEL, AMOUNT_LITER) ";
+            $query .= "VALUES (:gsID, :fuelID, :amount)";
+
+            $params[":gsID"] = $data["gas_station_id"];
+            $params[":fuelID"] = $data["fuel_id"];
+            $params[":amount"] = $data["amount"];
+
+            $dbResult = $this->dbConn->executeQuery($query, $params);
+
+            if ($this->dbErrorCheck($dbResult)) {
+
+                $statement = $dbResult["statement"];
+                
+                $this->response["success"] = true;
+                $this->response["result"] = $statement->rowCount() > 0;
+
+            }
+
+            return $this->response;
         }
 
         public function retrieve()
@@ -124,6 +142,26 @@
 
                 }
                 
+            }
+
+            return $this->response;
+        }
+
+        public function alreadyExists($gsID, $fuelID)
+        {
+            $query = "SELECT * FROM gas_station_fuel WHERE ID_GAS_STATION = :gsID ";
+            $query .= "AND ID_FUEL = :fuelID";
+            $params = [":gsID" => $gsID, "fuelID" => $fuelID];
+
+            $dbResult = $this->dbConn->executeQuery($query, $params);
+
+            if ($this->dbErrorCheck($dbResult)) {
+
+                $statement = $dbResult["statement"];
+            
+                $this->response["success"] = true;
+                $this->response["result"] = $statement->rowCount() > 0;
+
             }
 
             return $this->response;
