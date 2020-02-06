@@ -12,6 +12,7 @@
 
     ?>
     <a class="link" href="index.php?page=view-all&type=stock">Stock</a>
+    <a class="link" href="index.php?page=profile&type=user">Profile</a>
     <a class="link" href="index.php?page=logout&type=user">Log out</a>
 
 </div>

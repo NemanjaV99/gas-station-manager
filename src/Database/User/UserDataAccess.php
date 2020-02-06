@@ -200,6 +200,33 @@
             return $this->response;
         }
 
+        public function getByID($id)
+        {
+            $query = "SELECT * FROM user WHERE ID_USER = :id";
+            $params[":id"] = $id;
+
+            $dbResult = $this->dbConn->executeQuery($query, $params);
+
+            if ($this->dbErrorCheck($dbResult)) {
+
+                $this->response["success"] = true;
+                $statement = $dbResult["statement"];
+                
+                if ($statement->rowCount() > 0) {
+
+                    $this->response["result"] = $statement->fetchAll();
+
+                } else {
+
+                    $this->response["result"] = false;
+                }
+
+            }
+
+            return $this->response;
+            
+        }
+
         private function dbErrorCheck($dbResult)
         {
             if (isset($dbResult["db_error"])) {

@@ -9,4 +9,5 @@
         public function checkUserExists($email);
         public function getGasStationNameFromID($gasStationID);
         public function getUserFromEmail($email);
+        public function getByID($id);
     }

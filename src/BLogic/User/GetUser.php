@@ -21,6 +21,13 @@
             return $this->dbGetResult;
         }
 
+        public function getByID($id)
+        {
+            $this->dbGetResult = $this->repository->getByID($id);
+            $this->removeUnderscoreFromResultKeys();
+            return $this->dbGetResult;
+        }
+
         private function removePasswordFromResult()
         {
             if ($this->dbGetResult["success"]) {
