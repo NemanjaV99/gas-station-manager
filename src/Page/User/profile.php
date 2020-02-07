@@ -51,6 +51,33 @@
                     // Update profile
                     require_once "../src/Page/User/update.php";
 
+                    if (isset($_POST["submit-update-email"])) {
+
+                        $updateUser = $this->container->get("UpdateUser");
+                        $updateResult = $updateUser->updateEmail($session->getSessionKey("user"));
+
+                    } 
+
+                    if (isset($_POST["submit-update-pass"])) {
+
+                        $updateUser = $this->container->get("UpdateUser");
+                        $updateResult = $updateUser->updatePassword($session->getSessionKey("user"));
+                    } 
+
+                    if (isset($updateResult)) {
+
+                        if ($updateResult["success"]) {
+
+                            header("Location: index.php?page=profile&type=user");
+                            exit();
+
+                        } else {
+
+                            echo "<div class='error'>" . $updateResult["error"] . "</div>";
+                        }
+                    
+                    }
+                
                 }
 
             ?>

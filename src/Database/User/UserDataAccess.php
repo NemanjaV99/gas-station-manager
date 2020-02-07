@@ -67,9 +67,46 @@
             return $this->response;
         }
 
-        public function update($entity)
+        public function update($data)
         {
-            
+            if ($data["password"] == null) {
+
+                // Update email
+                $query = "UPDATE user SET email = :email WHERE ID_USER = :id";
+                $params = [":email" => $data["email"], ":id" => $data["id"]];
+
+                $dbResult = $this->dbConn->executeQuery($query, $params);
+
+                if ($this->dbErrorCheck($dbResult)) {
+
+                    $statement = $dbResult["statement"];
+                    
+                    $this->response["success"] = true;
+                    $this->response["result"] = $statement->rowCount() > 0;
+
+                }
+
+                return $this->response;
+
+            } else {
+
+                // Update password
+                $query = "UPDATE user SET password = :password WHERE ID_USER = :id";
+                $params = [":password" => $data["password"], ":id" => $data["id"]];
+
+                $dbResult = $this->dbConn->executeQuery($query, $params);
+
+                if ($this->dbErrorCheck($dbResult)) {
+
+                    $statement = $dbResult["statement"];
+                    
+                    $this->response["success"] = true;
+                    $this->response["result"] = $statement->rowCount() > 0;
+
+                }
+
+                return $this->response;
+            }
         }
 
         public function delete($id)
@@ -149,6 +186,25 @@
                 
                 $this->response["success"] = true;
                 $this->response["result"] = $statement->rowCount() > 0;
+
+            }
+
+            return $this->response;
+        }
+
+        public function getPassword($id)
+        {
+            $query = "SELECT PASSWORD FROM user WHERE ID_USER = :id";
+            $params[":id"] = $id;
+
+            $dbResult = $this->dbConn->executeQuery($query, $params);
+
+            if ($this->dbErrorCheck($dbResult)) {
+
+                $statement = $dbResult["statement"];
+                
+                $this->response["success"] = true;
+                $this->response["result"] = $statement->fetchColumn();
 
             }
 

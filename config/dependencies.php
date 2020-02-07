@@ -37,6 +37,12 @@
                 $c->get("Validator"));
         },
 
+        "UpdateUser" => function (ContainerInterface $c) {
+            return new GSManager\BLogic\User\UpdateUser( 
+                $c->get("UserDataAccess"), 
+                $c->get("Validator"));
+        },
+
         "Validator" => function () {
             return new GSManager\BLogic\Validator();
         },
