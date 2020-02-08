@@ -8,6 +8,7 @@
 
             echo "<a class='link' href='index.php?page=view-all&type=user'>Users</a>";
             echo "<a class='link' href='index.php?page=view-all&type=employee'>Employees</a>";
+            echo "<a class='link' href='index.php?page=update&type=employee'>Update Employee API</a>";
         }
 
     ?>

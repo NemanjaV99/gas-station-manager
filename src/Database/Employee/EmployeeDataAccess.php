@@ -67,9 +67,30 @@
             return $this->response;
         }
 
-        public function update($entity)
+        public function update($data)
         {
-            
+            $query = "UPDATE employee SET EXPERIENCE = :exp, SALARY = :salary, ";
+            $query .= "VACATION_DAYS = :vdays, ID_GAS_STATION = :gsID ";
+            $query .= "WHERE ID_EMPLOYEE = :empID";
+
+            $params[":exp"] = $data["experience"];
+            $params[":salary"] = $data["salary"];
+            $params[":vdays"] = $data["vacation-days"];
+            $params[":gsID"] = $data["gstation"];
+            $params[":empID"] = $data["employee-id"];
+
+            $dbResult = $this->dbConn->executeQuery($query, $params);
+
+            if ($this->dbErrorCheck($dbResult)) {
+
+                $statement = $dbResult["statement"];
+                
+                $this->response["success"] = true;
+                $this->response["result"] = $statement->rowCount() > 0;
+
+            }
+
+            return $this->response;
         }
 
         public function delete($id)
@@ -94,6 +115,25 @@
         public function getLastInsertID()
         {
             return $this->dbConn->lastInsertID();
+        }
+
+        public function checkEmployeeID($id)
+        {
+            $query = "SELECT ID_EMPLOYEE FROM employee WHERE ID_EMPLOYEE = :id";
+            $params[":id"] = $id;
+
+            $dbResult = $this->dbConn->executeQuery($query, $params);
+
+            if ($this->dbErrorCheck($dbResult)) {
+
+                $statement = $dbResult["statement"];
+                
+                $this->response["success"] = true;
+                $this->response["result"] = $statement->rowCount() > 0;
+
+            }
+
+            return $this->response;
         }
 
         private function dbErrorCheck($dbResult)

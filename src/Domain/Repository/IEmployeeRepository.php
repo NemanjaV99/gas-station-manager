@@ -4,5 +4,5 @@
 
     interface IEmployeeRepository extends IRepository
     {
-
+        public function checkEmployeeID($id);
     }

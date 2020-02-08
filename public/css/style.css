@@ -58,6 +58,8 @@ a.link {
 table.display-data {
     margin: 30px auto;
     border-collapse: collapse;
+    opacity: 1;
+    transition: opacity 1000ms linear;
 }
 
 table.display-data th,

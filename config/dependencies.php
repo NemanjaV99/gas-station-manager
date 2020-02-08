@@ -71,6 +71,10 @@
             return new GSManager\BLogic\Employee\DeleteEmployee($c->get("EmployeeDataAccess"));
         },
 
+        "UpdateEmployee" => function (ContainerInterface $c) {
+            return new GSManager\BLogic\Employee\UpdateEmployee($c->get("EmployeeDataAccess"));
+        },
+
 
         /** Business Logic - Store */
         "GetStock" => function (ContainerInterface $c) {

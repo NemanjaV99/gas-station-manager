@@ -17,10 +17,15 @@
 
         "Employee" => [
 
-            "view-all" => "src/Page/Employee/view-all.php"
+            "view-all" => "src/Page/Employee/view-all.php",
+            "update" => "src/Page/Employee/update.php"
         ],
 
         "Stock" => [
             "view-all" => "src/Page/Stock/view-all.php"
+        ],
+
+        "Api" => [
+            "employee" => "src/Page/Api/employee.php",
         ]
     ];
